@@ -1,0 +1,15 @@
+# Build artifacts
+/dist/
+
+# Superpowers workspace (root-level)
+/.superpowers/
+
+# Node modules (common)
+node_modules/
+
+# OS files
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
