@@ -13,7 +13,8 @@ output_root="$(cd "$output_root" && pwd)"
 
 app_dir="$output_root/firefox-minimal"
 addons_dir="$app_dir/addons"
-profile_src="$repo_root/prototype/profile"
+profile_prefs_src="$repo_root/prototype/profile/user.js"
+theme_src="$repo_root/vendor/wmfox/userChrome.css"
 work_dir="$(mktemp -d)"
 firefox_url="${FIREFOX_URL:-https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US}"
 vimium_url="${VIMIUMC_XPI_URL:-https://addons.mozilla.org/firefox/downloads/latest/vimium-c/latest.xpi}"
@@ -21,13 +22,14 @@ vimium_url="${VIMIUMC_XPI_URL:-https://addons.mozilla.org/firefox/downloads/late
 trap 'rm -rf "$work_dir"' EXIT
 
 rm -rf "$app_dir"
-mkdir -p "$app_dir" "$addons_dir"
+mkdir -p "$app_dir" "$addons_dir" "$app_dir/profile/chrome"
 
 curl -fsSL "$firefox_url" -o "$work_dir/firefox.tar.xz"
 tar -xJf "$work_dir/firefox.tar.xz" -C "$work_dir"
 mv "$work_dir/firefox" "$app_dir/firefox"
 
 curl -fsSL "$vimium_url" -o "$addons_dir/vimium-c.xpi"
-cp -R "$profile_src" "$app_dir/profile"
+install -m 0644 "$profile_prefs_src" "$app_dir/profile/user.js"
+install -m 0644 "$theme_src" "$app_dir/profile/chrome/userChrome.css"
 mkdir -p "$app_dir/firefox/distribution"
 install -m 0755 "$repo_root/scripts/launch-prototype.sh" "$app_dir/launch.sh"
