@@ -21,5 +21,6 @@ actual="$("$app_dir/launch.sh" --dry-run https://example.com)"
 expected="$app_dir/firefox/firefox --no-remote --profile $app_dir/profile https://example.com"
 test "$actual" = "$expected"
 
-grep -Fq '"file://"' "$app_dir/firefox/distribution/policies.json"
+expected_install_url="file://$app_dir/addons/vimium-c.xpi"
+grep -Fq "\"$expected_install_url\"" "$app_dir/firefox/distribution/policies.json"
 grep -Fq 'vimium-c@gdh1995.cn' "$app_dir/firefox/distribution/policies.json"
