@@ -1,5 +1,7 @@
 # Build artifacts
 /dist/
+/.worktrees/
+/worktrees/
 
 # Superpowers workspace (root-level)
 /.superpowers/
